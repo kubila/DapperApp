@@ -17,7 +17,7 @@ namespace DapperApp.Repository
         public Company Add(Company company)
         {
             _context.Companies.Add(company);
-           _context.SaveChanges();
+            _context.SaveChanges();
             return company;
         }
 
