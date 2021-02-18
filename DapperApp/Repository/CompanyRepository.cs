@@ -1,4 +1,5 @@
-﻿using DapperApp.Data;
+﻿using Dapper;
+using DapperApp.Data;
 using DapperApp.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
@@ -30,7 +31,9 @@ namespace DapperApp.Repository
 
         public List<Company> GetAll()
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM Companies";
+
+            return _db.Query<Company>(query).ToList();
         }
 
         public void Remove(int id)
