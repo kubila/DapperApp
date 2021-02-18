@@ -26,7 +26,11 @@ namespace DapperApp.Repository
 
         public Company Find(int id)
         {
-            throw new NotImplementedException();
+            // DON'T APPEND STRINGS,PARAMS,INTS TO YOUR QUERIES LIKE BELOW, DON'T DO THAT.
+            // "SELECT * FROM Companies WHERE CompanyId =" + id    ///// SQL INJECTION HEREEEEEEEEEEEEEEEEE
+
+            var query = "SELECT * FROM Companies WHERE CompanyId = @Id";
+            return _db.Query<Company>(query, new { @Id = id }).Single();
         }
 
         public List<Company> GetAll()
