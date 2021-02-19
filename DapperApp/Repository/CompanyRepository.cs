@@ -21,7 +21,21 @@ namespace DapperApp.Repository
 
         public Company Add(Company company)
         {
-            throw new NotImplementedException();
+            var query = "INSERT INTO Companies (Name, Address, City, State, PostalCode) VALUES (@Name, @Address, @City, @State, @PostalCode)"
+                + "SELECT CAST(SCOPE_IDENTITY() as int) "; // that's getting the id of inserted row, so Query<int> is the type this time.
+            // be carefull with ordering of columns, it should match with the placeholders above
+            var id = _db.Query<int>(query, new 
+            { 
+               company.Name, 
+               company.Address, 
+               company.City, 
+               company.State, 
+               company.PostalCode
+            })
+                .Single();
+
+            company.CompanyId = id;
+            return company;
         }
 
         public Company Find(int id)
