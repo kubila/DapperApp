@@ -23,15 +23,16 @@ namespace DapperApp.Repository
         {
             var query = "INSERT INTO Companies (Name, Address, City, State, PostalCode) VALUES (@Name, @Address, @City, @State, @PostalCode)"
                 + "SELECT CAST(SCOPE_IDENTITY() as int) "; // that's getting the id of inserted row, so Query<int> is the type this time.
-            // be carefull with ordering of columns, it should match with the placeholders above
-            var id = _db.Query<int>(query, new 
-            { 
-               company.Name, 
-               company.Address, 
-               company.City, 
-               company.State, 
-               company.PostalCode
-            })
+            // be carefull with ordering of columns, it should match with the placeholders above, if you pass correct column names Dapper smart enough to map them
+            var id = _db.Query<int>(query, company//new 
+            //{ 
+            //   company.Name, 
+            //   company.Address, 
+            //   company.City, 
+            //   company.State, 
+            //   company.PostalCode
+             //}
+             )
                 .Single();
 
             company.CompanyId = id;
@@ -62,7 +63,12 @@ namespace DapperApp.Repository
 
         public Company Update(Company company)
         {
-            throw new NotImplementedException();
+            // be carefull with @CompanyId, it should match your primary key column name, otherwise an error occurs.
+            var query = "UPDATE Companies SET Name = @Name, Address = @Address, City = @City, State = @State, PostalCode = @PostalCode WHERE CompanyId = @CompanyId";
+            // be carefull with @CompanyId, it should match your primary key column name, otherwise an error occurs.
+            //_db.Query<Company>(query, company); that's working too, but not necessary here
+            _db.Execute(query, company);
+            return company;
         }
     }
 }
