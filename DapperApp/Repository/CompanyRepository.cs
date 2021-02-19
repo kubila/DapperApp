@@ -26,7 +26,7 @@ namespace DapperApp.Repository
 
         public Company Find(int id)
         {
-            // DON'T APPEND STRINGS,PARAMS,INTS TO YOUR QUERIES LIKE BELOW, DON'T DO THAT.
+            // DON'T APPEND STRINGS,PARAMS,INTS TO YOUR QUERIES LIKE BELOW, DON'T DON'T DON'T
             // "SELECT * FROM Companies WHERE CompanyId =" + id    ///// SQL INJECTION HEREEEEEEEEEEEEEEEEE
 
             var query = "SELECT * FROM Companies WHERE CompanyId = @Id";
@@ -42,7 +42,8 @@ namespace DapperApp.Repository
 
         public void Remove(int id)
         {
-            
+            var query = "DELETE FROM Companies WHERE CompanyId = @Id";
+            _db.Query<Company>(query, new { @Id = id });
         }
 
         public Company Update(Company company)
