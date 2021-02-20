@@ -58,7 +58,8 @@ namespace DapperApp.Repository
         public void Remove(int id)
         {
             var query = "DELETE FROM Companies WHERE CompanyId = @Id";
-            _db.Query<Company>(query, new { @Id = id });
+            //_db.Query<Company>(query, new { @Id = id }); that's working too.
+            _db.Execute(query, new { @Id = id });
         }
 
         public Company Update(Company company)
@@ -67,7 +68,7 @@ namespace DapperApp.Repository
             var query = "UPDATE Companies SET Name = @Name, Address = @Address, City = @City, State = @State, PostalCode = @PostalCode WHERE CompanyId = @CompanyId";
             // be carefull with @CompanyId, it should match your primary key column name, otherwise an error occurs.
             //_db.Query<Company>(query, company); that's working too, but not necessary here
-            _db.Execute(query, company);
+            _db.Execute(query, company); // Use Execute when you don't care about what is returned
             return company;
         }
     }
