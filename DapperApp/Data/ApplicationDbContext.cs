@@ -14,6 +14,18 @@ namespace DapperApp.Data
 
         }
 
-        public DbSet<Company> Companies { get; set; }       
+        public DbSet<Company> Companies { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            // think this like the NotMapped property, tells ef to not add to db
+            builder.Entity<Company>().Ignore(c => c.Employees);
+
+            
+            builder.Entity<Employee>()
+                .HasOne(c => c.Company).WithMany(a => a.Employees).HasForeignKey(x => x.CompanyId);
+        }
     }
 }
