@@ -14,7 +14,6 @@ namespace DapperApp.Data
 
         }
 
-        public DbSet<Company> Companies { get; set; }
-
+        public DbSet<Company> Companies { get; set; }       
     }
 }

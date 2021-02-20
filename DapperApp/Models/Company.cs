@@ -20,6 +20,7 @@ namespace DapperApp.Models
 
         public string PostalCode { get; set; }
 
+        public List<Employee> Employees { get; set; }
 
     }
 }
