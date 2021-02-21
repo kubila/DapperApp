@@ -1,4 +1,5 @@
-﻿using DapperApp.Models;
+﻿using Dapper;
+using DapperApp.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -19,7 +20,10 @@ namespace DapperApp.Repository
 
         public Employee Add(Employee employee)
         {
-            throw new NotImplementedException();
+            var query = "INSERT INTO Employees (Name, Email, Phone, Title, CompanyId) VALUES(@Name, @Email, @Phone, @Title, @CompanyId);"
+            + "SELECT CAST(SCOPE_IDENTITY() as int)";
+            _db.Query(query, new { employee.Name, employee.Email, employee.Phone, employee.Title, employee.CompanyId});
+            return employee;
         }
 
         public Employee Find(int id)
