@@ -28,7 +28,9 @@ namespace DapperApp.Repository
 
         public Employee Find(int id)
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM Employees WHERE EmployeeId = @Id";
+            return _db.Query(query, new { @Id = id }).Single();
+
         }
 
         public List<Employee> GeAll()
