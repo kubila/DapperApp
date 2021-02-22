@@ -35,12 +35,13 @@ namespace DapperApp.Repository
 
         public List<Employee> GeAll()
         {
-            throw new NotImplementedException();
+            var query = "SELECT * FROM Employees";
+            return _db.Query<Employee>(query).ToList();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            throw new NotImplementedException();            
         }
 
         public Employee Update(Employee employee)
