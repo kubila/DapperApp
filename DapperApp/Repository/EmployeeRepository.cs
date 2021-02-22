@@ -41,12 +41,13 @@ namespace DapperApp.Repository
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();            
+            var query = "DELETE FROM Employees WHERE EmployeeId = @Id";
+            _db.Query(query, new { @Id = id });
         }
 
         public Employee Update(Employee employee)
         {
-            throw new NotImplementedException();
+           
         }
     }
 }
