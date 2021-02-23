@@ -47,7 +47,9 @@ namespace DapperApp.Repository
 
         public Employee Update(Employee employee)
         {
-           
+            var query = "UPDATE Employees SET Name = @Name, Email = @Email, Phone = @Phone, Title = @Title, CompanyId = @CompanyId WHERE EmployeeId = @EmployeeId";
+            _db.Query(query, new { employee });
+            return employee;
         }
     }
 }
