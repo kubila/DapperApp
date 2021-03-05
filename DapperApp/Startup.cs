@@ -31,6 +31,7 @@ namespace DapperApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
             services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddControllersWithViews();
             
         }

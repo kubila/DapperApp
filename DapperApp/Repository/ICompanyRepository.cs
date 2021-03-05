@@ -10,7 +10,7 @@ namespace DapperApp.Repository
     {
         Company Find(int id);
 
-        List<Company> GetAll();
+       List<Company> GetAll();
 
         Company Add(Company company);
 

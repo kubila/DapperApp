@@ -13,6 +13,7 @@ namespace DapperApp.Repository
     public class EmployeeRepository : IEmployeeRepository
     {
         private IDbConnection _db;
+
         public EmployeeRepository(IConfiguration configuration)
         {
             _db = new SqlConnection(configuration.GetConnectionString("DefaultConnection"));
