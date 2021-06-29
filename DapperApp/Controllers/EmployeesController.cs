@@ -28,24 +28,7 @@ namespace DapperApp.Controllers
         {
             return View(_employeeRepo.GeAll());
         }
-
-        // GET: EmployeeController/Details/5
-        public IActionResult Details(int? id)
-        {
-            if ( id == null )
-            {
-                return NotFound();
-            }
-
-            var employee = _employeeRepo.Find(id.GetValueOrDefault());
-
-            if ( employee == null )
-            {
-                return NotFound();
-            }
-
-            return View(employee);
-        }
+        
 
         // GET: EmployeeController/Create
         public IActionResult Create()
@@ -76,45 +59,40 @@ namespace DapperApp.Controllers
         }
 
         // GET: EmployeeController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            if ( id == null ) return NotFound();
+            var employee = _employeeRepo.Find(id.GetValueOrDefault());
+            if ( employee == null ) return NotFound();
+            return View(employee);
         }
 
         // POST: EmployeeController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [ActionName("Edit")]
+        public ActionResult Edit(int id)
         {
-            try
+            if ( id != Employee.EmployeeId ) return NotFound();
+
+            if(ModelState.IsValid)
             {
+                _employeeRepo.Update(Employee);
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(Employee);
+        }
+        
+        
+        public ActionResult Delete(int? id)
+        {
+            if ( id == null ) return NotFound();
+            _employeeRepo.Remove(id.GetValueOrDefault());
+
+            return RedirectToAction(nameof(Index));
         }
 
-        // GET: EmployeeController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EmployeeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+       
     }
 }
